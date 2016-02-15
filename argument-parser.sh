@@ -40,11 +40,22 @@ done
 [ "$ARG_DEBUG" == true ] && echo "Expanded argument list: ${argChunks[@]}"
 
 # Initialise some variables
-declare -A argv
+da=`command -v sw_vers`
+if [ ${da#} ];then
+	# BSD
+	#echo "This OS is BSD."
+	da=a
+else
+	# Linux
+	#echo "This OS is Not BSD."
+	da=A
+fi
+# Initialise some variables
+declare -$da argv
 lastWasArgument=0
 lastArgument=""
 
-declare -A argExpected
+declare -$da argExpected
 
 argGetName() {
 	for k in "${!argExpected[@]}"
